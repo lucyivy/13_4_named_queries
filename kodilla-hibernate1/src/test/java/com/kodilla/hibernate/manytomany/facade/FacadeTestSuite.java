@@ -3,7 +3,7 @@ package com.kodilla.hibernate.manytomany.facade;
 import com.kodilla.hibernate.manytomany.Company;
 import com.kodilla.hibernate.manytomany.Employee;
 import com.kodilla.hibernate.manytomany.dao.CompanyDao;
-import org.junit.After;
+import com.kodilla.hibernate.manytomany.dao.EmployeeDao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,17 +11,22 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class FacadeTestSuite {
     @Autowired
     private Facade facade;
 
     @Autowired
     private CompanyDao companyDao;
+
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @Before
     public void generateData() {
@@ -45,28 +50,21 @@ public class FacadeTestSuite {
         stephanieClarckson.getCompanies().add(dataMaesters);
         lindaKovalsky.getCompanies().add(dataMaesters);
         lindaKovalsky.getCompanies().add(greyMatter);
+
+        companyDao.save(softwareMachine);
+        companyDao.save(dataMaesters);
+        companyDao.save(greyMatter);
     }
 
-    @After
-    public void cleanUp() {
-        //CleanUp
-        try {
-            companyDao.deleteAll();
-            companyDao.deleteAll();
-            companyDao.deleteAll();
-        } catch (Exception e) {
-        }
-    }
 
     @Test
     public void testEmployeeSearch() {
         // When
-        List<Employee> resultList = facade.processEmployeeSearch("%i%");
 
+        List<Employee> resultList = facade.processEmployeeSearch("%i%");
 
         // Then
         Assert.assertEquals(2, resultList.size());
-
     }
 
     @Test
@@ -74,10 +72,7 @@ public class FacadeTestSuite {
         // When
         List<Company> resultList = facade.processCompanySearch("%i%");
 
-
         // Then
         Assert.assertEquals(1, resultList.size());
-
     }
-
 }
