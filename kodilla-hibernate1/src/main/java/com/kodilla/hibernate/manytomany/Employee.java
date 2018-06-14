@@ -1,15 +1,26 @@
 package com.kodilla.hibernate.manytomany;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedQuery(
-        name = "Employee.retrieveEmployeeNamed",
-        query = "FROM Employee WHERE lastName = :LAST_NAME"
-)
 
+@NamedQueries({
+        @NamedQuery(
+                name = "Employee.retrieveEmployeeByNamePart",
+                query = "FROM Employee WHERE lastName LIKE CONCAT('%', :PARTNAME, '%')"
+        ),
+        @NamedQuery(
+                name = "Employee.retrieveEmployeeNamed",
+                query = "FROM Employee WHERE lastName = :LAST_NAME"
+        )
+})
+
+
+@Component
 @Entity
 @Table(name = "EMPLOYEES")
 public class Employee {

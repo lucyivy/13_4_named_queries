@@ -1,2 +1,5 @@
 rootProject.name = 'kodilla-course_v3'
+include 'kodilla-hibernate1'
+include 'kodilla-patterns'
+include 'kodilla-rps'
 
