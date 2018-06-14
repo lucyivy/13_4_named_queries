@@ -56,7 +56,6 @@ public class FacadeTestSuite {
         companyDao.save(greyMatter);
     }
 
-
     @Test
     public void testEmployeeSearch() {
         // When

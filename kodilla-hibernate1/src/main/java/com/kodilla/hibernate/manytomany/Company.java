@@ -7,12 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//@NamedQuery(
-//        name = "Company.retrieveCompanyByNamePart",
-//        query = "FROM Company WHERE name LIKE CONCAT('%':PARTNAME'%')"
-//)
-
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "Company.retrieveNamesWithLetters",
@@ -22,12 +16,8 @@ import java.util.List;
                 name = "Company.retrieveCompanyByNamePart",
                 query = "SELECT * FROM COMPANIES WHERE COMPANY_NAME LIKE CONCAT('%', :PARTNAME, '%')"
         )
-
 })
 
-
-
-@Component
 @Entity
 @Table(name = "COMPANIES")
 public class Company {
